@@ -26,7 +26,7 @@
     <field name="XmlData" required="N" />
     <field name="MessageEncoding" required="N" />
     <field name="LastMsgSeqNumProcessed" required="N" />
-    <group name="HopCompID" required="N">
+    <group name="NoHops" required="N">
       <field name="HopCompID" required="N" />
       <field name="HopSendingTime" required="N" />
       <field name="HopRefID" required="N" />
@@ -82,7 +82,7 @@
       <field name="EncodedTextLen" required="N" />
       <field name="EncodedText" required="N" />
     </message>
-    <message name="BusinessMessageReject" msgtype="j" msgcat="admin">
+    <message name="BusinessMessageReject" msgtype="j" msgcat="app">
       <field name="RefSeqNum" required="N" />
       <field name="RefMsgType" required="Y" />
       <field name="BusinessRejectRefID" required="N" />
@@ -90,6 +90,21 @@
       <field name="Text" required="N" />
       <field name="EncodedTextLen" required="N" />
       <field name="EncodedText" required="N" />
+    </message>
+    <message name="UserRequest" msgtype="BE" msgcat="app">
+      <field name="UserRequestID" required="Y" />
+      <field name="UserRequestType" required="Y" />
+      <field name="Username" required="Y" />
+      <field name="Password" required="N" />
+      <field name="NewPassword" required="N" />
+      <field name="RawDataLength" required="N" />
+      <field name="RawData" required="N" />
+    </message>
+    <message name="UserResponse" msgtype="BF" msgcat="app">
+      <field name="UserRequestID" required="Y" />
+      <field name="Username" required="Y" />
+      <field name="UserStatus" required="N" />
+      <field name="UserStatusText" required="N" />
     </message>
     <message name="Advertisement" msgtype="7" msgcat="app">
       <field name="AdvId" required="Y" />
@@ -805,14 +820,13 @@
       <field name="DeleteReason" required="N" />
       <field name="MDEntryType" required="N" />
       <field name="MDEntryID" required="N" />
-      <group name="MDEntryRefID" required="N">
-        <component name="Instrument" required="N" />
-        <group name="NoUnderlyings" required="N">
-          <component name="UnderlyingInstrument" required="N" />
-        </group>
-        <group name="NoLegs" required="N">
-          <component name="InstrumentLeg" required="N" />
-        </group>
+      <field name="MDEntryRefID" required="N" />
+      <component name="Instrument" required="N" />
+      <group name="NoUnderlyings" required="N">
+        <component name="UnderlyingInstrument" required="N" />
+      </group>
+      <group name="NoLegs" required="N">
+        <component name="InstrumentLeg" required="N" />
       </group>
       <field name="FinancialStatus" required="N" />
       <field name="CorporateAction" required="N" />
@@ -2550,7 +2564,7 @@
       <component name="SettlInstructionsData" required="N" />
     </group>
   </message>
-  <message name="AllocationReportAck" msgtype="AS" msgcat="app">
+  <message name="AllocationReportAck" msgtype="AT" msgcat="app">
     <field name="AllocReportID" required="Y" />
     <field name="AllocID" required="Y" />
     <component name="Parties" required="N" />
@@ -2679,7 +2693,7 @@
     <field name="EncodedTextLen" required="N" />
     <field name="EncodedText" required="N" />
   </message>
-  <message name="ConfirmationRequest" msgtype="BS" msgcat="app">
+  <message name="ConfirmationRequest" msgtype="BH" msgcat="app">
     <field name="ConfirmReqID" required="Y" />
     <field name="ConfirmType" required="Y" />
     <group name="NoOrders" required="N">
@@ -2808,7 +2822,7 @@
     <field name="TotNumTradeReports" required="N" />
     <field name="TradeRequestResult" required="Y" />
     <field name="TradeRequestStatus" required="Y" />
-  <component name="Instrument" required="Y" />
+    <component name="Instrument" required="N" />
     <group name="NoUnderlyings" required="N">
       <component name="UnderlyingInstrument" required="N" />
     </group>
@@ -3204,7 +3218,7 @@
     <field name="EncodedTextLen" required="N" />
     <field name="EncodedText" required="N" />
   </message>
-  <message name="PositionReport" msgtype="AO" msgcat="app">
+  <message name="PositionReport" msgtype="AP" msgcat="app">
     <field name="PosMaintRptID" required="Y" />
     <field name="PosReqID" required="N" />
     <field name="PosReqType" required="N" />
@@ -3568,7 +3582,7 @@
     <field name="EncodedTextLen" required="N" />
     <field name="EncodedText" required="N" />
   </message>
-  <message name="CollateralInquiryAck" msgtype="BB" msgcat="app">
+  <message name="CollateralInquiryAck" msgtype="BG" msgcat="app">
     <field name="CollInquiryID" required="Y" />
     <field name="CollInquiryStatus" required="Y" />
     <field name="CollInquiryResult" required="N" />
@@ -3718,7 +3732,7 @@
       <component name="UnderlyingStipulations" required="N" />
     </component>
     <component name="InstrumentLeg">
-      <field name="LegSymbol" required="Y" />
+      <field name="LegSymbol" required="N" />
       <field name="LegSymbolSfx" required="N" />
       <field name="LegSecurityID" required="N" />
       <field name="LegSecurityIDSource" required="N" />
@@ -3893,9 +3907,10 @@
       </group>
     </component>
     <component name="PositionAmountData">
-      <field name="NoPosAmt" required="Y" />
-      <field name="PosAmtType" required="Y" />
-      <field name="PosAmt" required="Y" />
+      <group name="NoPosAmt" required="Y">
+        <field name="PosAmtType" required="Y" />
+        <field name="PosAmt" required="Y" />
+      </group>
     </component>
     <component name="TrdRegTimestamps">
       <group name="NoTrdRegTimestamps" required="Y">
@@ -4097,7 +4112,7 @@
       <value enum="M" description="LIST_STATUS_REQUEST" />
       <value enum="N" description="LIST_STATUS" />
       <value enum="P" description="ALLOCATION_INSTRUCTION_ACK" />
-      <value enum="Q" description="DONT_KNOW_TRADE_" />
+      <value enum="Q" description="DONT_KNOW_TRADE" />
       <value enum="R" description="QUOTE_REQUEST" />
       <value enum="S" description="QUOTE" />
       <value enum="T" description="SETTLEMENT_INSTRUCTIONS" />
@@ -4192,13 +4207,19 @@
       <value enum="2" description="LIMIT" />
       <value enum="3" description="STOP" />
       <value enum="4" description="STOP_LIMIT" />
+      <value enum="5" description="MARKET_ON_CLOSE" />
       <value enum="6" description="WITH_OR_WITHOUT" />
       <value enum="7" description="LIMIT_OR_BETTER" />
       <value enum="8" description="LIMIT_WITH_OR_WITHOUT" />
       <value enum="9" description="ON_BASIS" />
+      <value enum="A" description="ON_CLOSE" />
+      <value enum="B" description="LIMIT_ON_CLOSE" />
+      <value enum="C" description="FOREX_MARKET" />
       <value enum="D" description="PREVIOUSLY_QUOTED" />
       <value enum="E" description="PREVIOUSLY_INDICATED" />
+      <value enum="F" description="FOREX_LIMIT" />
       <value enum="G" description="FOREX_SWAP" />
+      <value enum="H" description="FOREX_PREVIOUSLY_QUOTED" />
       <value enum="I" description="FUNARI" />
       <value enum="J" description="MARKET_IF_TOUCHED" />
       <value enum="K" description="MARKET_WITH_LEFTOVER_AS_LIMIT" />
@@ -4359,6 +4380,7 @@
       <value enum="4" description="UNABLE_TO_PROCESS_ORDER_MASS_CANCEL_REQUEST" />
       <value enum="5" description="ORIGORDMODTIME_DID_NOT_MATCH_LAST_TRANSACTTIME_OF_ORDER" />
       <value enum="6" description="DUPLICATE_CLORDID_RECEIVED" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="103" name="OrdRejReason" type="INT">
       <value enum="0" description="BROKER_EXCHANGE_OPTION" />
@@ -4371,6 +4393,13 @@
       <value enum="7" description="DUPLICATE_OF_A_VERBALLY_COMMUNICATED_ORDER" />
       <value enum="8" description="STALE_ORDER" />
       <value enum="9" description="TRADE_ALONG_REQUIRED" />
+      <value enum="10" description="INVALID_INVESTOR_ID" />
+      <value enum="11" description="UNSUPPORTED_ORDER_CHARACTERISTIC" />
+      <value enum="12" description="SURVEILLENCE_OPTION" />
+      <value enum="13" description="INCORRECT_QUANTITY" />
+      <value enum="14" description="INCORRECT_ALLOCATED_QUANTITY" />
+      <value enum="15" description="UNKNOWN_ACCOUNT" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="104" name="IOIQualifier" type="CHAR">
       <value enum="A" description="ALL_OR_NONE" />
@@ -4831,7 +4860,15 @@
       <value enum="1" description="SNAPSHOT_PLUS_UPDATES" />
       <value enum="2" description="DISABLE_PREVIOUS_SNAPSHOT_PLUS_UPDATE_REQUEST" />
     </field>
-    <field number="264" name="MarketDepth" type="INT" />
+    <field number="264" name="MarketDepth" type="INT">
+<!--
+      Temporarily commented out until we can handle
+      N>1 scenario
+
+      <value enum="0" description="FULL_BOOK"/>
+      <value enum="1" description="TOP_OF_BOOK"/>
+-->
+    </field>
     <field number="265" name="MDUpdateType" type="INT">
       <value enum="0" description="FULL_REFRESH" />
       <value enum="1" description="INCREMENTAL_REFRESH" />
@@ -4962,6 +4999,12 @@
       <value enum="7" description="EXPIRED" />
       <value enum="8" description="QUERY" />
       <value enum="9" description="QUOTE_NOT_FOUND" />
+      <value enum="10" description="PENDING" />
+      <value enum="11" description="PASS" />
+      <value enum="12" description="LOCKED_MARKET_WARNING" />
+      <value enum="13" description="CROSS_MARKET_WARNING" />
+      <value enum="14" description="CANCELED_DUE_TO_LOCK_MARKET" />
+      <value enum="15" description="CANCELED_DUE_TO_CROSS_MARKET" />
     </field>
     <field number="298" name="QuoteCancelType" type="INT">
       <value enum="1" description="CANCEL_FOR_SYMBOL" />
@@ -5032,6 +5075,20 @@
       <value enum="7" description="MARKET_IMBALANCE_BUY" />
       <value enum="8" description="MARKET_IMBALANCE_SELL" />
       <value enum="9" description="MARKET_ON_CLOSE_IMBALANCE_BUY" />
+      <value enum="10" description="MARKET_ON_CLOSE_IMBALANCE_SELL" />
+      <value enum="11" description="NOT_ASSIGNED" />
+      <value enum="12" description="NO_MARKET_IMBALANCE" />
+      <value enum="13" description="NO_MARKET_ON_CLOSE_IMBALANCE" />
+      <value enum="14" description="ITS_PRE_OPENING" />
+      <value enum="15" description="NEW_PRICE_INDICATION" />
+      <value enum="16" description="TRADE_DISSEMINATION_TIME" />
+      <value enum="17" description="READY_TO_TRADE_START_OF_SESSION" />
+      <value enum="18" description="NOT_AVAILABLE_FOR_TRADING_END_OF_SESSION" />
+      <value enum="19" description="NOT_TRADED_ON_THIS_MARKET" />
+      <value enum="20" description="UNKNOWN_OR_INVALID" />
+      <value enum="21" description="PRE_OPEN" />
+      <value enum="22" description="OPENING_ROTATION" />
+      <value enum="23" description="FAST_MARKET" />
     </field>
     <field number="327" name="HaltReason" type="CHAR">
       <value enum="I" description="ORDER_IMBALANCE" />
@@ -5081,10 +5138,10 @@
     <field number="345" name="TradSesEndTime" type="UTCTIMESTAMP" />
     <field number="346" name="NumberOfOrders" type="INT" />
     <field number="347" name="MessageEncoding" type="STRING">
-      <value enum="ISO_2022_JP" description="ISO_2022_JP" />
-      <value enum="EUC_JP" description="EUC_JP" />
+      <value enum="ISO-2022-JP" description="ISO_2022_JP" />
+      <value enum="EUC-JP" description="EUC_JP" />
       <value enum="SHIFT_JIS" description="SHIFT_JIS" />
-      <value enum="UTF_8" description="UTF_8" />
+      <value enum="UTF-8" description="UTF_8" />
     </field>
     <field number="348" name="EncodedIssuerLen" type="LENGTH" />
     <field number="349" name="EncodedIssuer" type="DATA" />
@@ -5383,6 +5440,10 @@
       <value enum="7" description="INDEX" />
       <value enum="8" description="LOAN" />
       <value enum="9" description="MONEYMARKET" />
+      <value enum="10" description="MORTGAGE" />
+      <value enum="11" description="MUNICIPAL" />
+      <value enum="12" description="OTHER" />
+      <value enum="13" description="FINANCING" />
     </field>
     <field number="461" name="CFICode" type="STRING" />
     <field number="462" name="UnderlyingProduct" type="INT" />
@@ -6057,6 +6118,7 @@
       <value enum="2" description="NO_POSITIONS_FOUND_THAT_MATCH_CRITERIA" />
       <value enum="3" description="NOT_AUTHORIZED_TO_REQUEST_POSITIONS" />
       <value enum="4" description="REQUEST_FOR_POSITION_NOT_SUPPORTED" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="729" name="PosReqStatus" type="INT">
       <value enum="0" description="COMPLETED" />
@@ -6585,6 +6647,7 @@
       <value enum="7" description="NO_COLLATERAL_FOUND_FOR_THE_ORDER_SPECIFIED" />
       <value enum="8" description="COLLATERAL_INQUIRY_TYPE_NOT_SUPPORTED" />
       <value enum="9" description="UNAUTHORIZED_FOR_COLLATERAL_INQUIRY" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="947" name="StrikeCurrency" type="CURRENCY" />
     <field number="948" name="NoNested3PartyIDs" type="NUMINGROUP" />
