@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jardesc>
+<jar path="quickfix-logviewer/lib/quickfix-logviewer.jar"/>
+<options buildIfNeeded="true" compress="true" descriptionLocation="/quickfix-logviewer/logviewer.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" useSourceFolders="false"/>
+<manifest generateManifest="true" mainClassHandleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{Main.java[Main" manifestLocation="/logviewer/logviewer.manifest" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+<sealing sealJar="false">
+<packagesToSeal/>
+<packagesToUnSeal/>
+</sealing>
+</manifest>
+<selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MessageTableModel.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{AboutDialog.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MenuBar.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer.test{LogFileTestCase.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{LogFile.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{FileOpenDialog.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MessageTreeModel.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{Properties.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{Main.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{CustomFilterDialog.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{Frame.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer.test{MessagesTableModelTestCase.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MessagesTableModel.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{CancelException.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{FieldFilter.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{FilterType.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{SplitPane.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{ProgressBarPanel.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MessageTable.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{ProgressBar.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{Dialog.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer.test{AllTests.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{Category.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MessageTree.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MessagesTable.java"/>
+</selectedElements>
+</jardesc>

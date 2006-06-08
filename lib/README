@@ -1,0 +1,7 @@
+JAVA_HOME environment variable must be set
+
+To start under windows, run quickfix_logviewer.bat
+
+To start under unix, run quickfix_logviewer.sh
+
+User documentation is in documentation.pdf
