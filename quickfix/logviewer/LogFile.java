@@ -283,6 +283,8 @@ public class LogFile {
 			int lastChar = line.lastIndexOf('\001');
 			if( lastChar != line.length() )
 				line = line.substring(0, lastChar+1);
+			if( line == null )
+				return null;
 			if( dataDictionary == null )
 				return new Message( line, false );
 			else
