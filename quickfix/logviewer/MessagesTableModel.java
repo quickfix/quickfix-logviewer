@@ -19,9 +19,10 @@
 
 package quickfix.logviewer;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import quickfix.*;
 import quickfix.field.MsgType;
@@ -29,10 +30,10 @@ import quickfix.field.MsgType;
 import javax.swing.table.AbstractTableModel;
 
 public class MessagesTableModel extends AbstractTableModel {
-	private HashSet tags = new HashSet();
-	private HashSet headerTags = new HashSet();
-	private HashSet bodyTags = new HashSet();
-	private HashSet trailerTags = new HashSet();
+	private SortedSet tags = new TreeSet();
+	private SortedSet headerTags = new TreeSet();
+	private SortedSet bodyTags = new TreeSet();
+	private SortedSet trailerTags = new TreeSet();
 	private HashMap colToTag = new HashMap();
 	private ArrayList messages = null;
 	private ArrayList allMessages = new ArrayList();
@@ -173,7 +174,7 @@ public class MessagesTableModel extends AbstractTableModel {
 		return tagCount != tags.size();
 	}
 	
-	private void fillTagSet( FieldMap fieldMap, HashSet tagSet ) {
+	private void fillTagSet( FieldMap fieldMap, SortedSet tagSet ) {
 		Iterator i = fieldMap.iterator();
 		while( i.hasNext() ) {
 			StringField field = (StringField)i.next();
@@ -181,7 +182,7 @@ public class MessagesTableModel extends AbstractTableModel {
 		}
 	}
 	
-	public HashSet getTags() {
+	public SortedSet getTags() {
 		return tags;
 	}
 	

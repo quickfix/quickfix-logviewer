@@ -27,8 +27,8 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.swing.JCheckBox;
@@ -80,7 +80,7 @@ public class CustomFilterDialog extends Dialog implements ActionListener {
 		private JComboBox operatorComboBox = new OperatorComboBox();
 		private JTextField textField = new JTextField();
 				
-		FilterPanel( HashSet tags, DataDictionary dataDictionary ) {
+		FilterPanel( SortedSet tags, DataDictionary dataDictionary ) {
 			
 			setLayout( new FlowLayout() );
 			enablePanel( false );
@@ -139,7 +139,7 @@ public class CustomFilterDialog extends Dialog implements ActionListener {
 		}
 	}
 	
-	public CustomFilterDialog(JFrame owner, ArrayList filter, HashSet tags, DataDictionary dataDictionary) throws HeadlessException {
+	public CustomFilterDialog(JFrame owner, ArrayList filter, SortedSet tags, DataDictionary dataDictionary) throws HeadlessException {
 		super(owner, "Custom Filter");
 		
 		int rows = 10;

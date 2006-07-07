@@ -27,6 +27,7 @@ import quickfix.StringField;
 
 public class MessageTree extends JTree {
 
+	private static final long serialVersionUID = 1L;
 	private boolean firstModel = true;
 	
 	MessageTree() {
