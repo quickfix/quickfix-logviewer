@@ -143,7 +143,7 @@ public class LogFile {
 				bytesRead = 0;
 			}
 
-			Message message = parseLine( line, dataDictionary );
+			Message message = parseLine( line );
 			if( message == null )
 				continue;
 			messages.add( message );
@@ -232,7 +232,7 @@ public class LogFile {
 					bytesRead += line.length();
 					if( (++count % 1000) == 0 || lastMessageWasBad ) {
 						lastMessageWasBad = false;
-						Message message = parseLine( line, dataDictionary );
+						Message message = parseLine( line );
 						try {
 							if( message == null ) {
 								lastMessageWasBad = true;
@@ -263,7 +263,7 @@ public class LogFile {
 		return before ? mark : mark + bytesRead;
 	}
 
-	private Message parseLine( String line, DataDictionary dataDictionary ) {
+	private Message parseLine( String line ) {
 		if( skipLine(line, type) ) {
 			return null;
 		}
