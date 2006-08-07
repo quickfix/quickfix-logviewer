@@ -41,7 +41,7 @@ public class AboutDialog extends Dialog {
 		constraints.weighty = 1;
 		constraints.gridy = 0;
 		
-		addLabel( "QuickFIX Log Viewer v1.0.0" );
+		addLabel( "QuickFIX Log Viewer v1.0.1" );
 		addLabel( "Copyright 2004-2006 quickfixengine.org" );
 		addLabel( "www.quickfixengine.org");
 		addLabel( "ask@quickfixengine.org");

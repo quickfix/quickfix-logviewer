@@ -91,7 +91,7 @@ public class CustomFilterDialog extends Dialog implements ActionListener {
 			add( comboBox );
 			operatorComboBox.setPreferredSize( new Dimension(50, 25) );
 			add( operatorComboBox );
-			textField.setPreferredSize( new Dimension(300, 25) );
+			textField.setPreferredSize( new Dimension(275, 25) );
 			add( textField );
 			add( new JLabel() );
 			
