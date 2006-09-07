@@ -1,3 +1,7 @@
+1.1.0
+-----
+Added ability to export files and views. Supported formats are FIX, XML, and CSV.
+
 1.0.1
 -----
 Fix for custom filter value widgets not showing up under windows.

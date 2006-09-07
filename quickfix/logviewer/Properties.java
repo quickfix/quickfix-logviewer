@@ -22,7 +22,7 @@ package quickfix.logviewer;
 public class Properties extends java.util.Properties {
 	
 	final static int MAJOR_VERSION = 1;
-	final static int MINOR_VERSION = 0;
+	final static int MINOR_VERSION = 1;
 	final static int REVISION = 0;
 	
 	static private Properties instance = null;
