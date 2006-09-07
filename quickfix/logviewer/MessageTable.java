@@ -91,7 +91,7 @@ public class MessageTable extends JTable {
 		
 		if( dataDictionary.isHeaderField(tag) || dataDictionary.isTrailerField(tag) ) {
 			if( column == tagColumn )
-				r.setForeground(new Color(192,192,255));
+				r.setForeground(new Color(128,128,255));
 			else if( column == tagColumn + 1 )
 				r.setForeground(new Color(128,128,255));
 			else if( column == tagColumn + 2 )
@@ -102,7 +102,7 @@ public class MessageTable extends JTable {
 				r.setForeground(new Color(255,128,255));
 		} else {
 			if( column == tagColumn )
-				r.setForeground(new Color(64,64,255));
+				r.setForeground(new Color(0,0,255));
 			else if( column == tagColumn + 1 )
 				r.setForeground(new Color(0,0,255));
 			else if( column == tagColumn + 2 )

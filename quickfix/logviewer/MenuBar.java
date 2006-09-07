@@ -34,69 +34,49 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MenuBar extends javax.swing.JMenuBar implements ActionListener {
-	public static final String FILE_OPEN = "Open";
-	public static final String FILE_CLOSE = "Close";
-	public static final String FILE_TRACE = "Trace";
-	public static final String VIEW_AUTOSIZE_COLUMNS = "Autosize Columns";
-	public static final String VIEW_AUTOSIZE_AND_HIDE_COLUMNS = "Autosize And Hide Columns";
-	public static final String MESSAGE_VALIDATE = "Validate";
-	public static final String FILTER_ALL_MESSAGES = "All Messages";
-	public static final String FILTER_ADMINISTRATIVE_MESSAGES = "Administrative Messages";
-	public static final String FILTER_APPLICATION_MESSAGES = "Application Messages";
-	public static final String FILTER_CUSTOM_FILTER = "Custom Filter";
-	public static final String FILTER_INDICATION_CATEGORY = "Category: Indication";
-	public static final String FILTER_EVENT_COMMUNICATION_CATEGORY = "Category: Event Communication";
-	public static final String FILTER_QUOTATION_NEGOTIATION_CATEGORY = "Category: Quotation/Negotiation";
-	public static final String FILTER_MARKET_DATA_CATEGORY = "Category: Market Data";
-	public static final String FILTER_SECURITY_AND_TRADING_SESSION_CATEGORY = "Category: Security And Trading Session";
-	public static final String FILTER_SINGLE_GENERAL_ORDER_HANDLING_CATEGORY = "Category: Single/General Order Handling";
-	public static final String FILTER_CROSS_ORDERS_CATEGORY = "Category: Cross Orders";
-	public static final String FILTER_MULTILEG_ORDERS_CATEGORY = "Category: Multileg Orders";
-	public static final String FILTER_LIST_PROGRAM_BASKET_TRADING_CATEGORY = "Category: List/Program/Basket Trading";
-	public static final String FILTER_ALLOCATION_CATEGORY = "Category: Allocation";
-	public static final String FILTER_CONFIRMATION_CATEGORY = "Category: Confirmation";
-	public static final String FILTER_SETTLEMENT_INSTRUCTIONS_CATEGORY = "Category: Settlement Instructions";
-	public static final String FILTER_TRADE_CAPTURE_REPORTING_CATEGORY = "Category: Trade Capture Reporting";
-	public static final String FILTER_REGISTRATION_INSTRUCTIONS_CATEGORY = "Category: Registration Instructions";
-	public static final String FILTER_POSITIONS_MAINTENANCE_CATEGORY = "Category: Positions Maintenance";
-	public static final String FILTER_COLLATERAL_MANAGEMENT_CATEGORY = "Category: Collateral Management";
-	public static final String HELP_ABOUT = "About";
-	
 	private JMenu fileMenu = new JMenu("File");
-	private JMenuItem fileOpen = new JMenuItem( FILE_OPEN );
-	private JMenuItem fileClose = new JMenuItem( FILE_CLOSE );
-	private JCheckBoxMenuItem fileTrace = new JCheckBoxMenuItem( FILE_TRACE );
+	public static final JMenuItem fileOpen = new JMenuItem( "Open" );
+	public static final JMenuItem fileClose = new JMenuItem( "Close" );
+	private JMenu fileExportMenu = new JMenu( "Export" );
+	public static final JMenuItem fileExportFIX = new JMenuItem( "To FIX" );
+	public static final JMenuItem fileExportXML = new JMenuItem( "To XML" );
+	public static final JMenuItem fileExportCSV = new JMenuItem( "To CSV" );
+	public static final JCheckBoxMenuItem fileTrace = new JCheckBoxMenuItem( "Trace" );
 	
 	private JMenu viewMenu = new JMenu("View");
-	private JMenuItem autosizeColumns = new JMenuItem( VIEW_AUTOSIZE_COLUMNS );
-	private JMenuItem autosizeAndHideColumns = new JMenuItem( VIEW_AUTOSIZE_AND_HIDE_COLUMNS );
+	public static final JMenuItem viewAutosizeColumns = new JMenuItem( "Autosize Columns" );
+	public static final JMenuItem viewAutosizeAndHideColumns = new JMenuItem( "Autosize And Hide Columns" );
+	private JMenu viewExportMenu = new JMenu( "Export" );
+	public static final JMenuItem viewExportFIX = new JMenuItem( "To FIX" );
+	public static final JMenuItem viewExportXML = new JMenuItem( "To XML" );
+	public static final JMenuItem viewExportCSV = new JMenuItem( "To CSV" );
 	
 	private JMenu filterMenu = new JMenu("Filter");
-	private JCheckBoxMenuItem filterAllMessages = new JCheckBoxMenuItem( FILTER_ALL_MESSAGES );
-	private JCheckBoxMenuItem filterAdministrativeMessages = new JCheckBoxMenuItem( FILTER_ADMINISTRATIVE_MESSAGES );
-	private JCheckBoxMenuItem filterApplicationMessages = new JCheckBoxMenuItem( FILTER_APPLICATION_MESSAGES );
-	private JCheckBoxMenuItem filterCustomFilter = new JCheckBoxMenuItem( FILTER_CUSTOM_FILTER );
-	private JCheckBoxMenuItem filterIndicationCategory = new JCheckBoxMenuItem( FILTER_INDICATION_CATEGORY );
-	private JCheckBoxMenuItem filterEventCommunicationCategory = new JCheckBoxMenuItem( FILTER_EVENT_COMMUNICATION_CATEGORY );
-	private JCheckBoxMenuItem filterQuotationNegotiationCategory = new JCheckBoxMenuItem( FILTER_QUOTATION_NEGOTIATION_CATEGORY );
-	private JCheckBoxMenuItem filterMarketDataCategory = new JCheckBoxMenuItem( FILTER_MARKET_DATA_CATEGORY );
-	private JCheckBoxMenuItem filterSecurityAndTradingSessionCategory = new JCheckBoxMenuItem( FILTER_SECURITY_AND_TRADING_SESSION_CATEGORY );
-	private JCheckBoxMenuItem filterSingleGeneralOrderHandlingCategory = new JCheckBoxMenuItem( FILTER_SINGLE_GENERAL_ORDER_HANDLING_CATEGORY );
-	private JCheckBoxMenuItem filterCrossOrdersCategory = new JCheckBoxMenuItem( FILTER_CROSS_ORDERS_CATEGORY );
-	private JCheckBoxMenuItem filterMultilegOrdersCategory = new JCheckBoxMenuItem( FILTER_MULTILEG_ORDERS_CATEGORY );
-	private JCheckBoxMenuItem filterListProgramBasketTradingCategory = new JCheckBoxMenuItem( FILTER_LIST_PROGRAM_BASKET_TRADING_CATEGORY );
-	private JCheckBoxMenuItem filterAllocationCategory = new JCheckBoxMenuItem( FILTER_ALLOCATION_CATEGORY );
-	private JCheckBoxMenuItem filterConfirmationCategory = new JCheckBoxMenuItem( FILTER_CONFIRMATION_CATEGORY );
-	private JCheckBoxMenuItem filterSettlementInstructionsCategory = new JCheckBoxMenuItem( FILTER_SETTLEMENT_INSTRUCTIONS_CATEGORY );
-	private JCheckBoxMenuItem filterTradeCaptureReportingCategory = new JCheckBoxMenuItem( FILTER_TRADE_CAPTURE_REPORTING_CATEGORY );
-	private JCheckBoxMenuItem filterRegistrationInstructionsCategory = new JCheckBoxMenuItem( FILTER_REGISTRATION_INSTRUCTIONS_CATEGORY );
-	private JCheckBoxMenuItem filterPositionsMaintenanceCategory = new JCheckBoxMenuItem( FILTER_POSITIONS_MAINTENANCE_CATEGORY );
-	private JCheckBoxMenuItem filterCollateralManagementCategory = new JCheckBoxMenuItem( FILTER_COLLATERAL_MANAGEMENT_CATEGORY );
+	public static final JCheckBoxMenuItem filterAllMessages = new JCheckBoxMenuItem( "All Messages" );
+	public static final JCheckBoxMenuItem filterAdministrativeMessages = new JCheckBoxMenuItem( "Administrative Messages" );
+	public static final JCheckBoxMenuItem filterApplicationMessages = new JCheckBoxMenuItem( "Application Messages" );
+	public static final JCheckBoxMenuItem filterCustomFilter = new JCheckBoxMenuItem( "Custom Filter" );
+	public static final JCheckBoxMenuItem filterIndicationCategory = new JCheckBoxMenuItem( "Indication" );
+	public static final JCheckBoxMenuItem filterEventCommunicationCategory = new JCheckBoxMenuItem( "Event Communication" );
+	public static final JCheckBoxMenuItem filterQuotationNegotiationCategory = new JCheckBoxMenuItem( "Quotation/Negotiation" );
+	public static final JCheckBoxMenuItem filterMarketDataCategory = new JCheckBoxMenuItem( "Market Data" );
+	public static final JCheckBoxMenuItem filterSecurityAndTradingSessionCategory = new JCheckBoxMenuItem( "Security And Trading Session" );
+	public static final JCheckBoxMenuItem filterSingleGeneralOrderHandlingCategory = new JCheckBoxMenuItem( "Single/General Order Handling" );
+	public static final JCheckBoxMenuItem filterCrossOrdersCategory = new JCheckBoxMenuItem( "Cross Orders" );
+	public static final JCheckBoxMenuItem filterMultilegOrdersCategory = new JCheckBoxMenuItem( "Multileg Orders" );
+	public static final JCheckBoxMenuItem filterListProgramBasketTradingCategory = new JCheckBoxMenuItem( "List/Program/Basket Trading" );
+	public static final JCheckBoxMenuItem filterAllocationCategory = new JCheckBoxMenuItem( "Allocation" );
+	public static final JCheckBoxMenuItem filterConfirmationCategory = new JCheckBoxMenuItem( "Confirmation" );
+	public static final JCheckBoxMenuItem filterSettlementInstructionsCategory = new JCheckBoxMenuItem( "Settlement Instructions" );
+	public static final JCheckBoxMenuItem filterTradeCaptureReportingCategory = new JCheckBoxMenuItem( "Trade Capture Reporting" );
+	public static final JCheckBoxMenuItem filterRegistrationInstructionsCategory = new JCheckBoxMenuItem( "Registration Instructions" );
+	public static final JCheckBoxMenuItem filterPositionsMaintenanceCategory = new JCheckBoxMenuItem( "Positions Maintenance" );
+	public static final JCheckBoxMenuItem filterCollateralManagementCategory = new JCheckBoxMenuItem( "Collateral Management" );
 	private JCheckBoxMenuItem currentViewSource = filterAllMessages;
 	private JCheckBoxMenuItem previousViewSource = filterAllMessages;
 
 	private JMenu helpMenu = new JMenu("Help");
-	private JMenuItem about = new JMenuItem( HELP_ABOUT );
+	public static final JMenuItem helpAbout = new JMenuItem( "About" );
 	
 	ArrayList actionListeners = new ArrayList();
 	
@@ -108,13 +88,23 @@ public class MenuBar extends javax.swing.JMenuBar implements ActionListener {
 		fileMenu.add( fileOpen );
 		fileClose.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_W, keyMask ) );			
 		fileMenu.add( fileClose );
+		fileMenu.addSeparator();
+		fileExportMenu.add( fileExportFIX );
+		fileExportMenu.add( fileExportXML );
+		fileExportMenu.add( fileExportCSV );
+		fileMenu.add( fileExportMenu );
 		fileMenu.add( new JSeparator() );
 		fileTrace.setEnabled( true );		
 		fileMenu.add( fileTrace );		
 		add( fileMenu );
 		
-		viewMenu.add( autosizeColumns );
-		viewMenu.add( autosizeAndHideColumns );
+		viewMenu.add( viewAutosizeColumns );
+		viewMenu.add( viewAutosizeAndHideColumns );
+		viewMenu.addSeparator();
+		viewExportMenu.add( viewExportFIX );
+		viewExportMenu.add( viewExportXML );
+		viewExportMenu.add( viewExportCSV );
+		viewMenu.add( viewExportMenu );
 		add( viewMenu );
 
 		filterAllMessages.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_M, keyMask ) );
@@ -147,7 +137,7 @@ public class MenuBar extends javax.swing.JMenuBar implements ActionListener {
 		filterMenu.add( filterCollateralManagementCategory );
 		add( filterMenu );
 	
-		helpMenu.add( about );
+		helpMenu.add( helpAbout );
 		add( helpMenu );
 		
 		reset();
@@ -164,6 +154,9 @@ public class MenuBar extends javax.swing.JMenuBar implements ActionListener {
 	public void setFileOpen( boolean value ) {
 		viewMenu.setEnabled( value );
 		filterMenu.setEnabled( value );
+		fileExportMenu.setEnabled( value );
+		viewExportMenu.setEnabled( value );
+		fileClose.setEnabled( value );
 	}
 	
 	public void customFilter() {
@@ -176,10 +169,16 @@ public class MenuBar extends javax.swing.JMenuBar implements ActionListener {
 		if( l == this ) {
 			fileOpen.addActionListener( l );
 			fileClose.addActionListener( l );
+			fileExportFIX.addActionListener( l );
+			fileExportXML.addActionListener( l );
+			fileExportCSV.addActionListener( l );
 			fileTrace.addActionListener( l );
-			autosizeColumns.addActionListener( l );
-			autosizeAndHideColumns.addActionListener( l );
-			about.addActionListener( l );
+			viewAutosizeColumns.addActionListener( l );
+			viewAutosizeAndHideColumns.addActionListener( l );
+			viewExportFIX.addActionListener( l );
+			viewExportXML.addActionListener( l );
+			viewExportCSV.addActionListener( l );
+			helpAbout.addActionListener( l );
 			Component[] components = filterMenu.getMenuComponents();
 			for( int i = 0; i < components.length; ++i ) {
 				try {

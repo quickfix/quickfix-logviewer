@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,56 +98,56 @@ public class SplitPane extends JSplitPane
 	}
 
 	public void actionPerformed(final ActionEvent e) {
-		Object command = e.getActionCommand();
+		Object source = e.getSource();
 		
-		if( command == MenuBar.FILE_CLOSE ) {
+		if( source == MenuBar.fileClose ) {
 			closeFile();
-		} else if( command == MenuBar.FILE_TRACE ) {
+		} else if( source == MenuBar.fileTrace ) {
 			if( tracer.isRunning() )
 				tracer.stop();
 			else
 				tracer.start();
-		} else if( command == MenuBar.FILTER_ALL_MESSAGES ) {
+		} else if( source == MenuBar.filterAllMessages ) {
 			currentModel.viewAll();
-		} else if( command == MenuBar.FILTER_ADMINISTRATIVE_MESSAGES ) {
+		} else if( source == MenuBar.filterAdministrativeMessages ) {
 			currentModel.viewAdministrative();
-		} else if( command == MenuBar.FILTER_APPLICATION_MESSAGES ) {
+		} else if( source == MenuBar.filterApplicationMessages ) {
 			currentModel.viewApplication();
-		} else if( command == MenuBar.FILTER_INDICATION_CATEGORY ) {
+		} else if( source == MenuBar.filterIndicationCategory ) {
 			currentModel.viewCategory( Category.Indication );
-		} else if( command == MenuBar.FILTER_EVENT_COMMUNICATION_CATEGORY ) {
+		} else if( source == MenuBar.filterEventCommunicationCategory ) {
 			currentModel.viewCategory( Category.EventCommunication );
-		} else if( command == MenuBar.FILTER_QUOTATION_NEGOTIATION_CATEGORY ) {
+		} else if( source == MenuBar.filterQuotationNegotiationCategory ) {
 			currentModel.viewCategory( Category.QuoteNegotiation );
-		} else if( command == MenuBar.FILTER_MARKET_DATA_CATEGORY ) {
+		} else if( source == MenuBar.filterMarketDataCategory ) {
 			currentModel.viewCategory( Category.MarketData );
-		} else if( command == MenuBar.FILTER_SECURITY_AND_TRADING_SESSION_CATEGORY ) {
+		} else if( source == MenuBar.filterSecurityAndTradingSessionCategory ) {
 			currentModel.viewCategory( Category.SecurityAndTradingSessionDefinitionStatus );
-		} else if( command == MenuBar.FILTER_SINGLE_GENERAL_ORDER_HANDLING_CATEGORY ) {
+		} else if( source == MenuBar.filterSingleGeneralOrderHandlingCategory ) {
 			currentModel.viewCategory( Category.SingleGeneralOrderHandling );
-		} else if( command == MenuBar.FILTER_CROSS_ORDERS_CATEGORY ) {
+		} else if( source == MenuBar.filterCrossOrdersCategory ) {
 			currentModel.viewCategory( Category.CrossOrder );
-		} else if( command == MenuBar.FILTER_MULTILEG_ORDERS_CATEGORY ) {
+		} else if( source == MenuBar.filterMultilegOrdersCategory ) {
 			currentModel.viewCategory( Category.MultiLegOrders );
-		} else if( command == MenuBar.FILTER_LIST_PROGRAM_BASKET_TRADING_CATEGORY ) {
+		} else if( source == MenuBar.filterListProgramBasketTradingCategory ) {
 			currentModel.viewCategory( Category.ListProgramBasketTrading );
-		} else if( command == MenuBar.FILTER_ALLOCATION_CATEGORY ) {
+		} else if( source == MenuBar.filterAllocationCategory ) {
 			currentModel.viewCategory( Category.Allocation );
-		} else if( command == MenuBar.FILTER_CONFIRMATION_CATEGORY ) {
+		} else if( source == MenuBar.filterConfirmationCategory ) {
 			currentModel.viewCategory( Category.Confirmation );
-		} else if( command == MenuBar.FILTER_SETTLEMENT_INSTRUCTIONS_CATEGORY ) {
+		} else if( source == MenuBar.filterSettlementInstructionsCategory ) {
 			currentModel.viewCategory( Category.SettlementInstructions );
-		} else if( command == MenuBar.FILTER_TRADE_CAPTURE_REPORTING_CATEGORY ) {
+		} else if( source == MenuBar.filterTradeCaptureReportingCategory ) {
 			currentModel.viewCategory( Category.TradeCaptureReporting );
-		} else if( command == MenuBar.FILTER_REGISTRATION_INSTRUCTIONS_CATEGORY ) {
+		} else if( source == MenuBar.filterRegistrationInstructionsCategory ) {
 			currentModel.viewCategory( Category.RegistrationInstructions );
-		} else if( command == MenuBar.FILTER_POSITIONS_MAINTENANCE_CATEGORY ) {
+		} else if( source == MenuBar.filterPositionsMaintenanceCategory ) {
 			currentModel.viewCategory( Category.PositionsManagement );
-		} else if( command == MenuBar.FILTER_COLLATERAL_MANAGEMENT_CATEGORY ) {
+		} else if( source == MenuBar.filterCollateralManagementCategory ) {
 			currentModel.viewCategory( Category.CollateralManagement );
-		} else if( command == MenuBar.FILTER_CUSTOM_FILTER ) {
+		} else if( source == MenuBar.filterCustomFilter ) {
 			applyFilter( null );
-		} else if( command == MenuBar.HELP_ABOUT ) {
+		} else if( source == MenuBar.helpAbout ) {
 			showAbout();
 		} else {
 			setEnabled( false );
@@ -155,13 +156,25 @@ public class SplitPane extends JSplitPane
 			new ActionThread( e ) {
 			
 				public void run() {
-					Object command = e.getActionCommand();
+					Object source = e.getSource();
 						
-					if( command == MenuBar.FILE_OPEN ) {
+					if( source == MenuBar.fileOpen ) {
 						openFile();
-					} else if( command == MenuBar.VIEW_AUTOSIZE_COLUMNS ) {
+					} else if( source == MenuBar.fileExportFIX ) {
+						exportFile( source );
+					} else if( source == MenuBar.fileExportXML ) {
+						exportFile( source );
+					} else if( source == MenuBar.fileExportCSV ) {
+						exportFile( source );
+					} else if( source == MenuBar.viewExportFIX ) {
+						exportFile( source );
+					} else if( source == MenuBar.viewExportXML ) {
+						exportFile( source );
+					} else if( source == MenuBar.viewExportCSV ) {
+						exportFile( source );
+					} else if( source == MenuBar.viewAutosizeColumns ) {
 						currentTable.autoSizeColumns( progressBar, 100 );
-					} else if( command == MenuBar.VIEW_AUTOSIZE_AND_HIDE_COLUMNS ) {
+					} else if( source == MenuBar.viewAutosizeAndHideColumns ) {
 						currentTable.autoSizeColumns( progressBar, 1 );
 					}
 								
@@ -173,7 +186,7 @@ public class SplitPane extends JSplitPane
 	}
 	
 	private void openFile() {
-		FileOpenDialog dialog = new FileOpenDialog( frame, dataDictionary );
+		FileOpenDialog dialog = new FileOpenDialog( frame );
 		dialog.setVisible( true );
 		final File file = dialog.getFile();
 		final Date startTime = dialog.getStartTime();
@@ -187,7 +200,6 @@ public class SplitPane extends JSplitPane
 			try {
 				LogFile logFile = new LogFile( file, dataDictionary );
 				ArrayList messages = logFile.parseMessages( progressBar, startTime, endTime );
-				//ArrayList invalidMessages = logFile.getInvalidMessages();
 				currentModel = new MessagesTableModel( dataDictionary, logFile );
 				currentTable = new MessagesTable( currentModel );
 				currentTable.addListSelectionListener( this );
@@ -208,6 +220,28 @@ public class SplitPane extends JSplitPane
 		}
 		
 		if( traceRunning ) tracer.start();		
+	}
+	
+	private void exportFile( final Object command ) {
+		FileExportDialog dialog = new FileExportDialog( frame );
+		dialog.setVisible( true );
+		
+		if( dialog.getFile() != null ) {
+			if( command == MenuBar.fileExportFIX)
+				currentModel.exportAllToFIX( dialog.getFile() );
+			else if( command == MenuBar.fileExportXML )
+				currentModel.exportAllToXML( dialog.getFile() );
+			else if( command == MenuBar.fileExportCSV )
+				currentModel.exportAllToCSV( dialog.getFile() );
+			else if( command == MenuBar.viewExportFIX )
+				currentModel.exportViewToFIX( dialog.getFile() );
+			else if( command == MenuBar.viewExportXML )
+				currentModel.exportViewToXML( dialog.getFile() );
+			else if( command == MenuBar.viewExportCSV )
+				currentModel.exportViewToCSV( dialog.getFile() );
+		}
+		
+		dialog.dispose();
 	}
 	
 	private boolean applyFilter( FieldFilter fieldFilter ) {

@@ -18,6 +18,9 @@
 ****************************************************************************/
 
 package quickfix.logviewer;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -404,5 +407,129 @@ public class MessagesTableModel extends AbstractTableModel {
 
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
+	}
+	
+	public boolean exportAllToFIX( File file ) {
+		return exportToFIX( file, allMessages );
+	}
+	
+	public boolean exportAllToXML( File file ) {
+		return exportToXML( file, allMessages );
+	}
+	
+	public boolean exportAllToCSV( File file ) {
+		return exportToCSV( file, allMessages );
+	}
+	
+	public boolean exportViewToFIX( File file ) {
+		return exportToFIX( file, messages );
+	}
+	
+	public boolean exportViewToXML( File file ) {
+		return exportToXML( file, messages );
+	}
+	
+	public boolean exportViewToCSV( File file ) {
+		return exportToCSV( file, messages );
+	}
+	
+	private boolean exportToFIX( File file, ArrayList messages ) {
+		FileWriter exportWriter = null;
+		try {
+			exportWriter = new FileWriter( file );
+			Iterator i = messages.iterator();
+			while( i.hasNext() ) {
+				Message message = (Message)i.next();
+				exportWriter.write( message.toString() );
+				exportWriter.write( '\n' );
+			}
+		} catch (IOException e) {
+			return false;
+		} finally {
+			try {
+				exportWriter.close();
+			} catch (IOException e) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean exportToXML( File file, ArrayList messages ) {
+		FileWriter exportWriter = null;
+		try {
+			exportWriter = new FileWriter( file );
+			exportWriter.write( "<FIX>" );
+			Iterator i = messages.iterator();
+			while( i.hasNext() ) {
+				Message message = (Message)i.next();
+				String xmlMessage = message.toXML( dataDictionary );
+				int encoding = xmlMessage.indexOf("?>");
+				if( encoding == -1 )
+					exportWriter.write( xmlMessage );
+				else
+					exportWriter.write( xmlMessage.substring(encoding + 2) );
+			}
+			exportWriter.write( "</FIX>" );
+		} catch (IOException e) {
+			return false;
+		} finally {
+			try {
+				exportWriter.close();
+			} catch (IOException e) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean exportToCSV( File file, ArrayList messages ) {
+		FileWriter exportWriter = null;
+		try {
+			exportWriter = new FileWriter( file );
+			
+			Iterator i = tags.iterator();
+			while( i.hasNext() ) {
+				Integer tag = (Integer)i.next();
+				if( !tag.equals(tags.first()) )
+					exportWriter.write( ',' );
+				exportWriter.write( tag.toString() );
+			}
+			exportWriter.write( '\n' );
+			
+			i = messages.iterator();
+			while( i.hasNext() ) {
+				Message message = (Message)i.next();
+				Iterator j = tags.iterator();
+				while( j.hasNext() ) {
+					Integer tag = (Integer)j.next();
+					if( !tag.equals(tags.first()) )
+						exportWriter.write( ',' );
+					
+					if( message.getHeader().isSetField(tag.intValue()) ) {
+						exportWriter.write( message.getHeader().getString(tag.intValue() ));
+					} else if( message.getTrailer().isSetField(tag.intValue()) ) {
+						exportWriter.write( message.getTrailer().getString(tag.intValue() ));						
+					} else if( message.isSetField(tag.intValue()) ) {
+						exportWriter.write( message.getString(tag.intValue() ));
+					}
+				}
+				exportWriter.write( '\n' );
+			}
+		} catch (IOException e) {
+			return false;
+		} catch (FieldNotFound e) {
+			return false;
+		} finally {
+			try {
+				exportWriter.close();
+			} catch (IOException e) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }

@@ -41,7 +41,6 @@ import java.io.FileNotFoundException;
 import java.util.Date;
 
 public class FileOpenDialog extends Dialog implements ActionListener, PropertyChangeListener {
-	private DataDictionary dataDictionary = null;
 	private JFileChooser fileChooser = new JFileChooser();
 	private JLabel label = new JLabel("Time Range");
 	private JSpinner startTimeControl = null;
@@ -54,7 +53,7 @@ public class FileOpenDialog extends Dialog implements ActionListener, PropertyCh
 	private static String path = System.getProperty("user.dir");
 	private File file = null;
 	
-	public FileOpenDialog(JFrame owner, DataDictionary dataDictionary) throws HeadlessException {	
+	public FileOpenDialog(JFrame owner) throws HeadlessException {	
 		super(owner, "File Open");
 
 		setResizable(false);
@@ -155,7 +154,7 @@ public class FileOpenDialog extends Dialog implements ActionListener, PropertyCh
 			return;
 		
 		try {
-			LogFile logFile = new LogFile( fileChooser.getSelectedFile(), dataDictionary );
+			LogFile logFile = new LogFile( fileChooser.getSelectedFile(), null );
 			startTime = logFile.getStartTime();
 			roundDate( startTime, true );
 			if( startTime != null ) startTimeControl.setValue( startTime );
