@@ -409,56 +409,62 @@ public class MessagesTableModel extends AbstractTableModel {
 		return false;
 	}
 	
-	public boolean exportAllToFIX( File file ) {
-		return exportToFIX( file, allMessages );
+	public void exportAllToFIX( ProgressBarPanel progressBar, File file ) throws IOException {
+		exportToFIX( progressBar, file, allMessages );
 	}
 	
-	public boolean exportAllToXML( File file ) {
-		return exportToXML( file, allMessages );
+	public void exportAllToXML( ProgressBarPanel progressBar, File file ) throws IOException {
+		exportToXML( progressBar, file, allMessages );
 	}
 	
-	public boolean exportAllToCSV( File file ) {
-		return exportToCSV( file, allMessages );
+	public void exportAllToCSV( ProgressBarPanel progressBar, File file ) throws IOException {
+		exportToCSV( progressBar, file, allMessages );
 	}
 	
-	public boolean exportViewToFIX( File file ) {
-		return exportToFIX( file, messages );
+	public void exportViewToFIX( ProgressBarPanel progressBar, File file ) throws IOException {
+		exportToFIX( progressBar, file, messages );
 	}
 	
-	public boolean exportViewToXML( File file ) {
-		return exportToXML( file, messages );
+	public void exportViewToXML( ProgressBarPanel progressBar, File file ) throws IOException {
+		exportToXML( progressBar, file, messages );
 	}
 	
-	public boolean exportViewToCSV( File file ) {
-		return exportToCSV( file, messages );
+	public void exportViewToCSV( ProgressBarPanel progressBar, File file ) throws IOException {
+		exportToCSV( progressBar, file, messages );
 	}
 	
-	private boolean exportToFIX( File file, ArrayList messages ) {
-		FileWriter exportWriter = null;
+	private void exportToFIX( ProgressBarPanel progressBar, File file, ArrayList messages ) throws IOException {
+		if( progressBar != null )
+			progressBar.setTask( "Exporting as FIX to " + file.getName(), 0, messages.size(), true );
+		int count = 0;
+		
 		try {
+			FileWriter exportWriter = null;
 			exportWriter = new FileWriter( file );
 			Iterator i = messages.iterator();
 			while( i.hasNext() ) {
 				Message message = (Message)i.next();
 				exportWriter.write( message.toString() );
 				exportWriter.write( '\n' );
+				if( progressBar != null && (++count % 1000) == 0 )
+					if( !progressBar.increment( 1000 ) ) return;
 			}
-		} catch (IOException e) {
-			return false;
+			exportWriter.close();
+		} catch( IOException e ) {
+			throw e;
 		} finally {
-			try {
-				exportWriter.close();
-			} catch (IOException e) {
-				return false;
-			}
+			if( progressBar != null )
+				progressBar.done();
 		}
-		
-		return true;
 	}
 	
-	private boolean exportToXML( File file, ArrayList messages ) {
-		FileWriter exportWriter = null;
+	private void exportToXML( ProgressBarPanel progressBar, File file, ArrayList messages ) throws IOException {
+		if( progressBar != null )
+			progressBar.setTask( "Exporting as XML to " + file.getName(), 0, messages.size(), true );
+		int count = 0;
+		
 		try {
+			FileWriter exportWriter = null;
 			exportWriter = new FileWriter( file );
 			exportWriter.write( "<FIX>" );
 			Iterator i = messages.iterator();
@@ -470,24 +476,26 @@ public class MessagesTableModel extends AbstractTableModel {
 					exportWriter.write( xmlMessage );
 				else
 					exportWriter.write( xmlMessage.substring(encoding + 2) );
+				if( progressBar != null && (++count % 1000) == 0 )
+					if( !progressBar.increment( 1000 ) ) return;
 			}
 			exportWriter.write( "</FIX>" );
-		} catch (IOException e) {
-			return false;
+			exportWriter.close();
+		} catch( IOException e ) {
+			throw e;
 		} finally {
-			try {
-				exportWriter.close();
-			} catch (IOException e) {
-				return false;
-			}
+			if( progressBar != null )
+				progressBar.done();
 		}
-		
-		return true;
 	}
 	
-	private boolean exportToCSV( File file, ArrayList messages ) {
-		FileWriter exportWriter = null;
+	private void exportToCSV( ProgressBarPanel progressBar, File file, ArrayList messages ) throws IOException {
+		if( progressBar != null )
+			progressBar.setTask( "Exporting as CSV to " + file.getName(), 0, messages.size(), true );
+		int count = 0;
+
 		try {
+			FileWriter exportWriter = null;
 			exportWriter = new FileWriter( file );
 			
 			Iterator i = tags.iterator();
@@ -507,29 +515,26 @@ public class MessagesTableModel extends AbstractTableModel {
 					Integer tag = (Integer)j.next();
 					if( !tag.equals(tags.first()) )
 						exportWriter.write( ',' );
-					
-					if( message.getHeader().isSetField(tag.intValue()) ) {
-						exportWriter.write( message.getHeader().getString(tag.intValue() ));
-					} else if( message.getTrailer().isSetField(tag.intValue()) ) {
-						exportWriter.write( message.getTrailer().getString(tag.intValue() ));						
-					} else if( message.isSetField(tag.intValue()) ) {
-						exportWriter.write( message.getString(tag.intValue() ));
-					}
+					try {
+							if( message.getHeader().isSetField(tag.intValue()) ) {
+								exportWriter.write( message.getHeader().getString(tag.intValue() ));
+							} else if( message.getTrailer().isSetField(tag.intValue()) ) {
+								exportWriter.write( message.getTrailer().getString(tag.intValue() ));						
+							} else if( message.isSetField(tag.intValue()) ) {
+								exportWriter.write( message.getString(tag.intValue() ));
+							}
+					} catch( FieldNotFound e ) {}
 				}
 				exportWriter.write( '\n' );
+				if( progressBar != null && (++count % 1000) == 0 )
+					if( !progressBar.increment( 1000 ) ) return;
 			}
-		} catch (IOException e) {
-			return false;
-		} catch (FieldNotFound e) {
-			return false;
+			exportWriter.close();
+		} catch( IOException e ) {
+			throw e;
 		} finally {
-			try {
-				exportWriter.close();
-			} catch (IOException e) {
-				return false;
-			}
+			if( progressBar != null )
+				progressBar.done();
 		}
-		
-		return true;
 	}
 }

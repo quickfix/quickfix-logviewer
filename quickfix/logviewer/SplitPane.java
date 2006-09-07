@@ -225,23 +225,32 @@ public class SplitPane extends JSplitPane
 	private void exportFile( final Object command ) {
 		FileExportDialog dialog = new FileExportDialog( frame );
 		dialog.setVisible( true );
+		File file = dialog.getFile();
+		dialog.dispose();
 		
-		if( dialog.getFile() != null ) {
-			if( command == MenuBar.fileExportFIX)
-				currentModel.exportAllToFIX( dialog.getFile() );
-			else if( command == MenuBar.fileExportXML )
-				currentModel.exportAllToXML( dialog.getFile() );
-			else if( command == MenuBar.fileExportCSV )
-				currentModel.exportAllToCSV( dialog.getFile() );
-			else if( command == MenuBar.viewExportFIX )
-				currentModel.exportViewToFIX( dialog.getFile() );
-			else if( command == MenuBar.viewExportXML )
-				currentModel.exportViewToXML( dialog.getFile() );
-			else if( command == MenuBar.viewExportCSV )
-				currentModel.exportViewToCSV( dialog.getFile() );
+		boolean traceRunning = tracer.isRunning();
+		if( traceRunning ) tracer.stop();
+		
+		if( file != null ) {
+			try {
+				if( command == MenuBar.fileExportFIX)
+					currentModel.exportAllToFIX( progressBar, file );
+				else if( command == MenuBar.fileExportXML )
+					currentModel.exportAllToXML( progressBar, file );
+				else if( command == MenuBar.fileExportCSV )
+					currentModel.exportAllToCSV( progressBar, file );
+				else if( command == MenuBar.viewExportFIX )
+					currentModel.exportViewToFIX( progressBar, file );
+				else if( command == MenuBar.viewExportXML )
+					currentModel.exportViewToXML( progressBar, file );
+				else if( command == MenuBar.viewExportCSV )
+					currentModel.exportViewToCSV( progressBar, file );
+			} catch( IOException e ) {
+				System.out.println(e);
+			}
 		}
 		
-		dialog.dispose();
+		if( traceRunning ) tracer.start();
 	}
 	
 	private boolean applyFilter( FieldFilter fieldFilter ) {
