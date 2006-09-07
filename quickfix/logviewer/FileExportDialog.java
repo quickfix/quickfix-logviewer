@@ -33,6 +33,7 @@ public class FileExportDialog extends Dialog implements ActionListener {
 		getContentPane().add( fileChooser, constraints );
 		
 		fileChooser.addActionListener( this );
+		fileChooser.setCurrentDirectory( new File(path) );
 		fileChooser.setApproveButtonText("Export");
 		Dimension size = fileChooser.getPreferredSize();
 		size.setSize( size.getWidth() * 1.1, size.getHeight() * 1.25 );
