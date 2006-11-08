@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jardesc>
 <jar path="quickfix-logviewer/lib/quickfix-logviewer.jar"/>
-<options buildIfNeeded="true" compress="true" descriptionLocation="/quickfix-logviewer/logviewer.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" useSourceFolders="false"/>
+<options buildIfNeeded="true" compress="true" descriptionLocation="/quickfix-logviewer/logviewer.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" useSourceFolders="false"/>
 <manifest generateManifest="true" mainClassHandleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{Main.java[Main" manifestLocation="/logviewer/logviewer.manifest" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
 <sealing sealJar="false">
 <packagesToSeal/>
@@ -13,6 +13,7 @@
 <javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{AboutDialog.java"/>
 <javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MenuBar.java"/>
 <javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer.test{LogFileTestCase.java"/>
+<javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{FileExportDialog.java"/>
 <javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{LogFile.java"/>
 <javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{FileOpenDialog.java"/>
 <javaElement handleIdentifier="=quickfix-logviewer/&lt;quickfix.logviewer{MessageTreeModel.java"/>
