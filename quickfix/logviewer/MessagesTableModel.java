@@ -266,6 +266,7 @@ public class MessagesTableModel extends AbstractTableModel {
 					else
 						message.getField( field );
 
+					int operator = fieldFilter.getOperator();
 					int compareResults = 0;
 					String value1 = field.getValue();
 					String value2 = fieldFilter.getValue();
@@ -301,8 +302,11 @@ public class MessagesTableModel extends AbstractTableModel {
 						if( value1Name != null )
 							compareResults = value1Name.toUpperCase().compareTo(value2.toUpperCase());
 					}
-					
-					int operator = fieldFilter.getOperator();
+
+					if ( operator == FieldFilter.CONTAINS ) {
+						compareResults = value1.indexOf(value2);
+					}
+
 					switch( operator ) {
 						case FieldFilter.EQUAL: if( !(compareResults == 0)) addMessage = false; break;
 						case FieldFilter.NOT_EQUAL: if( !(compareResults != 0) ) addMessage = false; break;
@@ -310,6 +314,7 @@ public class MessagesTableModel extends AbstractTableModel {
 						case FieldFilter.LESS_THAN_OR_EQUAL: if( !(compareResults <= 0) ) addMessage = false; break;
 						case FieldFilter.GREATER_THAN: if( !(compareResults > 0) ) addMessage = false; break;
 						case FieldFilter.GREATER_THAN_OR_EQUAL: if( !(compareResults >= 0)) addMessage = false; break;
+						case FieldFilter.CONTAINS: if(compareResults == -1) addMessage = false; break;
 					}
 				} catch (FieldNotFound e) {
 					addMessage = false;

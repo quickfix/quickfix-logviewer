@@ -71,6 +71,7 @@ public class CustomFilterDialog extends Dialog implements ActionListener {
 			this.addItem( "<=" );
 			this.addItem( ">");
 			this.addItem( ">=" );
+			this.addItem( "contains" );
 		}
 	}
 	
@@ -89,7 +90,7 @@ public class CustomFilterDialog extends Dialog implements ActionListener {
 			add( checkBox );
 			comboBox.setPreferredSize( new Dimension(200, 25) );
 			add( comboBox );
-			operatorComboBox.setPreferredSize( new Dimension(50, 25) );
+			operatorComboBox.setPreferredSize( new Dimension(90, 25) );
 			add( operatorComboBox );
 			textField.setPreferredSize( new Dimension(250, 25) );
 			add( textField );
@@ -213,7 +214,9 @@ public class CustomFilterDialog extends Dialog implements ActionListener {
 			return FieldFilter.GREATER_THAN;
 		if( stringOperator.equals(">=") )
 			return FieldFilter.GREATER_THAN_OR_EQUAL;
-		return FieldFilter.EQUAL;
+		if( stringOperator.equals("contains") )
+			return FieldFilter.CONTAINS;
+		return FieldFilter.CONTAINS;
 	}
 		
 	public ArrayList getFilter() {
