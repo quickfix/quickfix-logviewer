@@ -29,7 +29,8 @@ public class FieldFilter {
 	public final static int LESS_THAN_OR_EQUAL = 3;
 	public final static int GREATER_THAN = 4;
 	public final static int GREATER_THAN_OR_EQUAL = 5;
-	
+	public final static int CONTAINS = 6;
+
 	private StringField field = null;
 	private int operator = 0;
 	
